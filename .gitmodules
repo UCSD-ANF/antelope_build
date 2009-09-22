@@ -1,11 +1,9 @@
-[submodule "anfsrc"]
-	path = include/anfsrc
-	url = anfadmin.ucsd.edu:/anf/software/git/anfsrc.git
-
-[submodule "antelopelocal"]
-	path = include/antelopelocal
+[submodule "build/antelopelocal"]
+	path = build/antelopelocal
 	url = anfadmin.ucsd.edu:/anf/software/git/antelopelocal.git
-
-[submodule "contrib"]
-	path = include/contrib
+[submodule "build/anfsrc"]
+	path = build/anfsrc
+	url = anfadmin.ucsd.edu:/anf/software/git/anfsrc.git
+[submodule "build/contrib"]
+	path = build/contrib
 	url = git://github.com/antelopeusersgroup/antelope_contrib.git

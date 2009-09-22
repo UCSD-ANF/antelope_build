@@ -1,9 +1,9 @@
 GIT=/opt/csw/bin/git
 
 # The default target is ...
-#all: antelopelocal amakelocal rrdtool perlmagick contrib vorb
+#all: antelopelocal rrdtool perlmagick contrib vorb
 BUILDROOT=build
-all: antelopelocal amakelocal
+all: antelopelocal
 
 clean: antelopelocal_clean
 
@@ -19,16 +19,6 @@ antelopelocal_gitpull: .PHONY
 
 antelopelocal_clean: .PHONY
 	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) clean
-
-##############################################################################
-# amakelocal.pf
-##############################################################################
-AMAKELOCAL_DESTDIR=$(ANTELOPE)/data/pf
-
-amakelocal: $(AMAKELOCAL_DESTDIR)/amakelocal.pf
-
-$(AMAKELOCAL_DESTDIR)/amakelocal.pf: files/amakelocal.pf
-	install amakelocal.pf $(AMAKELOCAL_DESTDIR)
 
 ##############################################################################
 # rrdtool

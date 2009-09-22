@@ -1,0 +1,22 @@
+--- rrdtool-1.3.8/bindings/perl-shared/Makefile.PL	Fri Dec  5 15:39:55 2008
++++ files/Makefile.PL.RRDs.mine	Fri Sep 11 21:08:53 2009
+@@ -25,12 +25,13 @@
+ # to the perl shared object.
+ 
+ my $librrd;
+-if ($^O eq 'darwin'){
+-        $librrd = '-lrrd';
+-}
+-else {
+-        $librrd = "-L../../src/.libs/ $R -lrrd";
+-}
++#if ($^O eq 'darwin'){
++#        $librrd = '-lrrd';
++#}
++#else {
++#        $librrd = "-L../../src/.libs/ $R -lrrd";
++#}
++$librrd = "-L/opt/csw/lib -R/opt/csw/lib -lrrd";
+ 
+ WriteMakefile(
+     'NAME'         => 'RRDs',

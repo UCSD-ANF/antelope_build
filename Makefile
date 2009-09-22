@@ -10,12 +10,9 @@ clean: antelopelocal_clean
 #############################################################################
 # Antelope Local
 #############################################################################
-ANTELOPELOCAL_SRCDIR=antelopelocal.git
-antelopelocal: antelopelocal_gitpull
+ANTELOPELOCAL_SRCDIR=antelopelocal
+antelopelocal: 
 	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) install
-
-antelopelocal_gitpull: .PHONY
-	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(GIT) pull
 
 antelopelocal_clean: .PHONY
 	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) clean

@@ -12,6 +12,7 @@ clean: antelopelocal_clean contrib_clean
 #############################################################################
 ANTELOPELOCAL_SRCDIR=antelopelocal
 antelopelocal: 
+	@echo "+-+-+ Building AntelopeLocal +-+-+"
 	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) install
 
 antelopelocal_clean: .PHONY
@@ -22,9 +23,12 @@ antelopelocal_clean: .PHONY
 #############################################################################
 CONTRIB_SRCDIR=contrib
 contrib: 
-	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && $(MAKE) Include && $(MAKE) install
+	@echo "+-+-+ Building Contrib +-+-+"
+	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && \
+	  echo "+++ Running make Include in contrib" && $(MAKE) Include && \
+	  echo "+++ Running make install in contrib" && $(MAKE) install
 
-antelopelocal_clean: .PHONY
+contrib_clean: .PHONY
 	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && $(MAKE) clean
 
 

@@ -31,6 +31,9 @@ contrib:
 contrib_clean: .PHONY
 	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && $(MAKE) clean
 
+update:
+	git pull
+	git submodule update
 
 # Dummy target (useful for non-GNU makes
 .PHONY:

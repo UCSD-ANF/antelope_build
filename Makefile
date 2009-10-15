@@ -62,6 +62,7 @@ anf_clean: .PHONY
 #############################################################################
 update:
 	git pull
+	git submodule init
 	git submodule update
 
 # Dummy target (useful for non-GNU makes

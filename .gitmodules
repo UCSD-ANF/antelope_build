@@ -7,3 +7,6 @@
 [submodule "build/contrib"]
 	path = build/contrib
 	url = git://github.com/antelopeusersgroup/antelope_contrib.git
+[submodule "build/vorb"]
+	path = build/vorb
+	url = anfadmin.ucsd.edu:/anf/software/git/antelope_vorb.git

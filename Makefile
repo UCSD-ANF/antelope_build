@@ -3,7 +3,7 @@ GIT=/opt/csw/bin/git
 # The default target is ...
 #all: antelopelocal rrdtool perlmagick contrib vorb
 BUILDROOT=build
-all: antelopelocal contrib
+all: antelopelocal contrib vorb
 
 clean: antelopelocal_clean contrib_clean
 

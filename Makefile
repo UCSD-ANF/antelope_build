@@ -15,6 +15,12 @@ antelopelocal:
 	@echo "+-+-+ Building AntelopeLocal +-+-+"
 	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) install
 
+antelopelocal_update: .PHONY
+	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && \
+	  git checkout master && \
+	  git pull
+	git commit $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) -m "Sync AntelopeLocal to HEAD via Makefile"
+
 antelopelocal_clean: .PHONY
 	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) clean
 
@@ -27,6 +33,12 @@ contrib:
 	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && \
 	  echo "+++ Running make Include in $(CONTRIB_SRCDIR)" && $(MAKE) Include && \
 	  echo "+++ Running make install in $(CONTRIB_SRCDIR)" && $(MAKE) install
+
+contrib_update: .PHONY
+	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && \
+	  git checkout master && \
+	  git pull
+	git commit $(BUILDROOT)/$(CONTRIB_SRCDIR) -m "Sync contrib to HEAD via Makefile"
 
 contrib_clean: .PHONY
 	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && $(MAKE) clean
@@ -41,6 +53,12 @@ vorb:
 	  echo "+++ Running make Include in $(VORB_SRCDIR)" && $(MAKE) Include && \
 	  echo "+++ Running make install in $(VORB_SRCDIR)" && $(MAKE) install
 
+vorb_update: .PHONY
+	cd $(BUILDROOT)/$(VORB_SRCDIR) && \
+	  git checkout master && \
+	  git pull
+	git commit $(BUILDROOT)/$(VORB_SRCDIR) -m "Sync Vorb to HEAD via Makefile"
+
 vorb_clean: .PHONY
 	cd $(BUILDROOT)/$(VORB_SRCDIR) && $(MAKE) clean
 
@@ -53,6 +71,12 @@ anf:
 	cd $(BUILDROOT)/$(ANF_SRCDIR) && \
 	  echo "+++ Running make Include in $(ANF_SRCDIR)" && $(MAKE) Include && \
 	  echo "+++ Running make install in $(ANF_SRCDIR)" && $(MAKE) install
+
+anf_update: .PHONY
+	cd $(BUILDROOT)/$(ANF_SRCDIR) && \
+	  git checkout master && \
+	  git pull
+	git commit $(BUILDROOT)/$(ANF_SRCDIR) -m "Sync ANFSRC to HEAD via Makefile"
 
 anf_clean: .PHONY
 	cd $(BUILDROOT)/$(ANF_SRCDIR) && $(MAKE) clean

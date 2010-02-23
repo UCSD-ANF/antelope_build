@@ -89,5 +89,7 @@ update:
 	git submodule init
 	git submodule update
 
+submodule_update: antelopelocal_update contrib_update vorb_update anf_update
+
 # Dummy target (useful for non-GNU makes
 .PHONY:

@@ -1,1 +1,0 @@
-/opt/antelope/src/buildscripts/envsetup.base.sh

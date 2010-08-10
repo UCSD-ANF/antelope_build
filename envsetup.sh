@@ -48,7 +48,7 @@ cat 1>&2 << EOF
 WARNING: /opt/anf/${antver} does not exist. Setting up only basic Antelope environment. Please bootstrap the Anf tree by running:
 
 make update
-( cd build/anfsrc/coldstart && make )
+( cd build/anfsrc/adm/coldstart && make )
 
 Then, re-source this script to make sure that the \$ANF environment is set up correctly
 EOF

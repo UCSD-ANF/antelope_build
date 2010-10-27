@@ -91,5 +91,12 @@ update:
 
 submodule_update: antelopelocal_update contrib_update vorb_update anf_update
 
+# list of dirs to fix permissions on
+ANTDIRS=4.11 4.11p 5.0-64 5.0-64p data local perl5.10 perl5.10-64 perl5.8 tcltk8.4.16-64 tcltk8.4.4
+fixperms: .PHONY
+	cd /opt/antelope && \
+	  sudo chown -R rt:antelope $(ANTDIRS) && \
+	  sudo chmod -R g+w $(ANTDIRS)
+
 # Dummy target (useful for non-GNU makes
 .PHONY:

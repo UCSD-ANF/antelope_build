@@ -3,3 +3,5 @@ Useful Targets in this Makefile
 submodule_update - updates the anfsrc, contrib, and vorb repos from upstream
 
 update - updates this repository from upstream
+
+fixperms - fix permissions on the /opt/antelope tree for selected directories

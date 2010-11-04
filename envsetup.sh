@@ -1,6 +1,13 @@
-# environment setup file for building Antelope
+# environment setup file for building Antelope with Bourne shells
+# See also envsetup.csh for C shell variants
 
-# determine the version of antelope that we are building for
+# To use this file under a Bourne-compatible shell, type:
+# . envsetup.sh
+
+#
+# Determine the version of Antelope used to build software
+#
+# Assume a default of 5.0-64 if we aren't in /opt/antelope/VERSION/src
 DEFAULT_ANTVER=5.0-64
 currentdir=`pwd`
 if [ `basename $currentdir` == 'src' ]; then
@@ -8,9 +15,11 @@ if [ `basename $currentdir` == 'src' ]; then
   antver=`basename $parentdir`
   echo "Antelope version is $antver" 1>&2
 else
-  echo "Unable to determine which version of Antelope you want based on the current directory name. Using default of $DEFAULT_ANTVER"
+  echo "Unable to determine which version of Antelope you want based on the"
+  echo "current directory name. Using default of $DEFAULT_ANTVER"
   antver=$DEFAULT_ANTVER
 fi
+unset parentdir
 
 # Set up the umask to allow others to tweak the tree
 umask 0002
@@ -45,7 +54,8 @@ if [ -d /opt/anf/${antver}/ ]; then
 else
   . /opt/antelope/${antver}/setup.sh
 cat 1>&2 << EOF
-WARNING: /opt/anf/${antver} does not exist. Setting up only basic Antelope environment. Please bootstrap the Anf tree by running:
+WARNING: /opt/anf/${antver} does not exist. Setting up only basic Antelope environment.
+Please bootstrap the Anf tree by running (inside this repository):
 
 make update
 ( cd build/anfsrc/adm/coldstart && make )

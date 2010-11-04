@@ -1,3 +1,5 @@
+DO NOT DO AN UPDATE OF ANTELOPE WITHOUT OPENING A JIRA ISSUE IN THE ANTELOPE QUEUE TO TRACK IT
+
 Useful Targets in this Makefile
 
 submodule_update - updates the anfsrc, contrib, and vorb repos from upstream

@@ -96,7 +96,7 @@ ANTDIRS=4.11 4.11p 5.0-64 5.0-64p data local perl5.10 perl5.10-64 perl5.8 tcltk8
 fixperms: .PHONY
 	cd /opt/antelope && \
 	  sudo chown -R rt:antelope $(ANTDIRS) && \
-	  sudo chmod -R g+w $(ANTDIRS)
+	  sudo chmod -R ug+rw $(ANTDIRS)
 
 # Dummy target (useful for non-GNU makes
 .PHONY:

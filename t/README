@@ -1,0 +1,3 @@
+This is a set of tests to be run against the Antelope distribution before it gets pushed out. There is currently no framework around any of these tests or any sort of automatic run-time mechanism. All tests should exit with result code 0 if they complete successfully, and non-zero if an error occurred.
+
+Eventually the plan is to use something like Antelope's certify utility to run them, but in fine BRTT fashion the docs are something that only DanQ can make heads or tails of.

@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
-dl( 'Orb.so' ) or die( 'Cannot load Orb shared object' );
-dl( 'Datascope.so' ) or die ( 'Cannot load Datascope shared object' );
+$antelope=getenv('ANTELOPE');
+dl( $antelope . '/local/data/php/' . 'Orb.so' ) or die( 'Cannot load Orb shared object' );
+dl( $antelope . '/local/data/php/' . 'Datascope.so' ) or die ( 'Cannot load Datascope shared object' );
 ?>

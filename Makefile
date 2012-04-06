@@ -1,5 +1,3 @@
-GIT=/opt/csw/bin/git
-
 # The default target is ...
 #all: antelopelocal rrdtool perlmagick contrib vorb
 BUILDROOT=build
@@ -86,6 +84,7 @@ anf_clean: .PHONY
 #############################################################################
 update:
 	git pull
+	git submodule sync
 	git submodule init
 	git submodule update
 
@@ -98,5 +97,5 @@ fixperms: .PHONY
 	  sudo chown -PR rt:antelope $(ANTDIRS) ; \
 	  sudo chmod -PR ug+rw $(ANTDIRS)
 
-# Dummy target (useful for non-GNU makes
+# Dummy target (useful for non-GNU makes)
 .PHONY:

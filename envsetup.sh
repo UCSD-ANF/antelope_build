@@ -30,6 +30,7 @@ export CVS_RSH
 
 # Override the PATH and build tools
 case `uname -s` in
+  Linux)
   Darwin)
   ;;
   SunOS)

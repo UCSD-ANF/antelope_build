@@ -30,21 +30,23 @@ export CVS_RSH
 
 # Override the PATH and build tools
 case `uname -s` in
+  Linux)
+    ;;
   Darwin)
-  ;;
+    ;;
   SunOS)
 
-  PATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/opt/SUNWspro/bin:/opt/csw/bin:/usr/local/bin
-  ## NOTE -- /opt/matlab/bin must be in your path otherwise the Antelope MATLAB wxtenstions won't get built.
-  export PATH
+    PATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/opt/SUNWspro/bin:/opt/csw/bin:/usr/local/bin
+    ## NOTE -- /opt/matlab/bin must be in your path otherwise the Antelope MATLAB wxtenstions won't get built.
+    export PATH
 
-  TAR=/opt/csw/bin/gtar
-  CC=/opt/SUNWspro/bin/cc
-  F77=/opt/SUNWspro/bin/f77
-  CXX=/opt/SUNWspro/bin/CC
-  CCC=${CXX}
-  export TAR CC F77 CXX
-  ;;
+    TAR=/opt/csw/bin/gtar
+    CC=/opt/SUNWspro/bin/cc
+    F77=/opt/SUNWspro/bin/f77
+    CXX=/opt/SUNWspro/bin/CC
+    CCC=${CXX}
+    export TAR CC F77 CXX
+    ;;
   *)
   echo "WARNING: unknown OS Type `uname -s`" 1>&2
 esac

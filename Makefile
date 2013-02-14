@@ -1,9 +1,12 @@
 # The default target is ...
 BUILDROOT=build
-all: antelopelocal anf contrib vorb
+all: antelope_update antelopelocal anf contrib vorb
 
-clean: antelopelocal_clean anf_clean contrib_clean vorb_clean
+CLEAN_TARGETS  = antelope_purge_old
+CLEAN_TARGETS += antelopelocal_clean
+CLEAN_TARGETS += anf_clean contrib_clean vorb_clean
 
+clean: $(CLEAN_TARGETS)
 ###
 # Installation and update
 ###

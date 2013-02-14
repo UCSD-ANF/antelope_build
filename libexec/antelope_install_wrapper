@@ -20,10 +20,16 @@ INSTALLER_CMD_NAME='Install_antelope'
 # Location of the initial license.pf and site.pf
 INITIAL_PF_DIR=os.path.join(INSTALLER_BASEDIR,'pf')
 
-class UnknownAntelopeVersionException(Exception):
+class AntelopeInstallerException(Exception):
+  """Base class for errors in this script"""
   pass
 
-class AntelopeInstallerException(Exception):
+class UnknownAntelopeVersionException(AntelopeInstallerException):
+  """Unable to determine what version of Antelope to install"""
+  pass
+
+class AntelopeInstallerRuntimeException(AntelopeInstallerException):
+  """General runtime error in the Antelope installer"""
   pass
 
 def flatten(l):
@@ -78,7 +84,8 @@ def get_requested_version():
     requestedVersion=get_version_from_cwd()
 
   if requestedVersion == None or requestedVersion == '':
-    raise UnknownAntelopeVersionException()
+    raise UnknownAntelopeVersionException(
+      "Couldn't determine which version of Antelope to install")
 
   return requestedVersion
 
@@ -94,7 +101,7 @@ def run_installer(version):
   (output,junk)=p.communicate()
 
   if p.returncode != 0:
-    raise AntelopeInstallerException("[RESULT CODE 0]\n" + output)
+    raise AntelopeInstallerRuntimeException("[RESULT CODE 0]\n" + output)
 
 
   errorStrings=("Cannot proceed with verification",
@@ -103,11 +110,11 @@ def run_installer(version):
   # Look for common error strings
   for err in errorStrings:
     if output.find(err) >= 0:
-      raise AntelopeInstallerException(output)
+      raise AntelopeInstallerRuntimeException(output)
 
   # If the installer bails out early, it won't print 'Done.'
   if output.find('Done.') < 0:
-    raise AntelopeInstallerException(output)
+    raise AntelopeInstallerRuntimeException(output)
 
 def copy_license_pf(version):
   print >>sys.stderr, "Installing initial site.pf"
@@ -123,7 +130,7 @@ def copy_site_pf(version):
                     'data','pf','license.pf')
   shutil.copyfile(src,dest)
 
-def copy_baseline_parameter_files(version=get_requested_version()):
+def copy_baseline_parameter_files(version):
   copy_license_pf(version)
   copy_site_pf(version)
 
@@ -136,17 +143,21 @@ def test_all():
   print "Requested Antelope Version is %s" % ver
 
 ### MAIN ###
-version=get_requested_version()
 try:
+  version=get_requested_version()
   run_installer(version)
-  copy_baseline_parameter_files()
-except (AntelopeInstallerException),e:
+  copy_baseline_parameter_files(version)
+except (AntelopeInstallerRuntimeException),e:
   print >> sys.stderr, "ERROR: The Antelope installer failed to " \
       "complete successfully. Output is below.\n", \
       '---------------------------------', \
       e, \
       '\n---------------------------------'
-  exit(1)
+  sys.exit(2)
+except (UnknownAntelopeVersionException),e:
+  print >> sys.stderr, \
+      "ERROR: Couldn't determine which version of Antelope to install."
+  sys.exit(3)
 except (Exception),e:
   print >>sys.stderr, "ERROR: Something went wrong:\n", e
   sys.exit(1)

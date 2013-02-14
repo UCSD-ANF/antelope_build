@@ -74,7 +74,7 @@ def get_requested_version():
   else:
     requestedVersion = envVersion
 
-  if requestedVersion == None:
+  if requestedVersion == None or requestedVersion == '':
     requestedVersion=get_version_from_cwd()
 
   if requestedVersion == None or requestedVersion == '':
@@ -86,9 +86,16 @@ def run_installer(version):
   print >>sys.stderr, "Installing Antelope %s" % version
   installerCmd = os.path.join(INSTALLER_BASEDIR, version,
                               INSTALLER_CMD_NAME)
-  output=subprocess.check_output(
-    flatten([installerCmd, INSTALLER_ARGS]),
-    stderr=subprocess.STDOUT)
+  #output=subprocess.check_output(
+  #  flatten([installerCmd, INSTALLER_ARGS]),
+  #  stderr=subprocess.STDOUT)
+  p = subprocess.Popen(flatten([installerCmd, INSTALLER_ARGS]),
+       stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+  output=p.communicate()
+
+  if p.returncode != 0:
+    raise AntelopeInstallerException("[RESULT CODE 0]\n" + output)
+  
 
   errorStrings=("Cannot proceed with verification",
                 'Please fix the above problems, then try again.')
@@ -142,6 +149,6 @@ except (AntelopeInstallerException),e:
   exit(1)
 except (Exception),e:
   print >>sys.stderr, "ERROR: Something went wrong:\n", e
-  exit(1)
+  sys.exit(1)
 
-exit(0)
+sys.exit(0)

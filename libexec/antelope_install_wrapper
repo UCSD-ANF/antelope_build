@@ -97,13 +97,13 @@ def run_installer(version):
       raise AntelopeInstallerException(output)
 
 def copy_license_pf(version):
-  src=os.path.join(INITIAL_PF_DIR,'pf','site.pf')
+  src=os.path.join(INITIAL_PF_DIR,'site.pf')
   dest=os.path.join(get_antelope_base_dir(version),
                     'data','pf','site.pf')
   shutil.copyfile(src,dest)
 
 def copy_site_pf(version):
-  src=os.path.join(INITIAL_PF_DIR,'pf','license.pf-'+ version)
+  src=os.path.join(INITIAL_PF_DIR,'license.pf-'+ version)
   dest=os.path.join(get_antelope_base_dir(version),
                     'data','pf','license.pf')
   shutil.copyfile(src,dest)

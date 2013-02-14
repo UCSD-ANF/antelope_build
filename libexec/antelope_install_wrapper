@@ -133,14 +133,14 @@ version=get_requested_version()
 try:
   run_installer(version)
   copy_baseline_parameter_files()
-except AntelopeInstallerException as e:
+except (AntelopeInstallerException),e:
   print >> sys.stderr, "ERROR: The Antelope installer failed to " \
       "complete successfully. Output is below.\n", \
       '---------------------------------', \
       e, \
       '\n---------------------------------'
   exit(1)
-except Exception as e:
+except (Exception),e:
   print >>sys.stderr, "ERROR: Something went wrong:\n", e
   exit(1)
 

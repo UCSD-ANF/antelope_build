@@ -83,6 +83,7 @@ def get_requested_version():
   return requestedVersion
 
 def run_installer(version):
+  print >>sys.stderr, "Installing Antelope %s" % version
   installerCmd = os.path.join(INSTALLER_BASEDIR, version,
                               INSTALLER_CMD_NAME)
   output=subprocess.check_output(
@@ -102,12 +103,14 @@ def run_installer(version):
     raise AntelopeInstallerException(output)
 
 def copy_license_pf(version):
+  print >>sys.stderr, "Installing initial site.pf"
   src=os.path.join(INITIAL_PF_DIR,'site.pf')
   dest=os.path.join(get_antelope_base_dir(version),
                     'data','pf','site.pf')
   shutil.copyfile(src,dest)
 
 def copy_site_pf(version):
+  print >>sys.stderr, "Installing initial license file"
   src=os.path.join(INITIAL_PF_DIR,'license.pf-'+ version)
   dest=os.path.join(get_antelope_base_dir(version),
                     'data','pf','license.pf')

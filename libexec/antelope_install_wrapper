@@ -92,9 +92,14 @@ def run_installer(version):
   errorStrings=("Cannot proceed with verification",
                 'Please fix the above problems, then try again.')
 
+  # Look for common error strings
   for err in errorStrings:
     if output.find(err) >= 0:
       raise AntelopeInstallerException(output)
+
+  # If the installer bails out early, it won't print 'Done.'
+  if output.find('Done.') < 0:
+    raise AntelopeInstallerException(output)
 
 def copy_license_pf(version):
   src=os.path.join(INITIAL_PF_DIR,'site.pf')

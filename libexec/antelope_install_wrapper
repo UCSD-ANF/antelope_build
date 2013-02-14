@@ -91,11 +91,11 @@ def run_installer(version):
   #  stderr=subprocess.STDOUT)
   p = subprocess.Popen(flatten([installerCmd, INSTALLER_ARGS]),
        stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-  output=p.communicate()
+  (output,junk)=p.communicate()
 
   if p.returncode != 0:
     raise AntelopeInstallerException("[RESULT CODE 0]\n" + output)
-  
+
 
   errorStrings=("Cannot proceed with verification",
                 'Please fix the above problems, then try again.')

@@ -5,6 +5,14 @@ all: antelopelocal anf contrib vorb
 clean: antelopelocal_clean anf_clean contrib_clean vorb_clean
 
 ###
+# Installation and update
+###
+antelope_install:
+	./libexec/antelope_install_wrapper
+
+antelope_update:
+	antelope_update -tv
+###
 # Antelope Local
 ###
 ANTELOPELOCAL_SRCDIR=antelopelocal

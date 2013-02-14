@@ -1,0 +1,139 @@
+#!/usr/bin/env python
+# vim:ft=python
+
+import os
+import sys
+import subprocess
+import collections
+import shutil
+
+###
+# Config
+###
+
+# Location of the Antelope installers. There should be a directory for
+# each version
+INSTALLER_BASEDIR=os.path.join(os.sep,'opt','antelope','cd')
+INSTALLER_ARGS= [ '-S', '-tuv' ]
+INSTALLER_CMD_NAME='Install_antelope'
+
+# Location of the initial license.pf and site.pf
+INITIAL_PF_DIR=os.path.join(INSTALLER_BASEDIR,'pf')
+
+class UnknownAntelopeVersionException(Exception):
+  pass
+
+class AntelopeInstallerException(Exception):
+  pass
+
+def flatten(l):
+  for el in l:
+    if isinstance(el, collections.Iterable) \
+       and not isinstance(el,basestring):
+      for sub in flatten(el):
+        yield sub
+    else:
+      yield el
+
+def get_antelope_base_dir(version=None):
+  basedir=os.path.join(os.sep,'opt','antelope')
+
+  if version:
+    return os.path.join(basedir,version)
+
+  return basedir
+
+def get_version_from_env(varName='ANTELOPE'):
+  envVal=os.environ.get(varName)
+  try:
+    (dirName, antelopeVersion) = os.path.split(envVal)
+    if dirName == get_antelope_base_dir():
+      return antelopeVersion
+    return ''
+  except:
+    return ''
+
+def get_version_from_cwd():
+  cwd=os.getcwd()
+  (parentDir,thisDir) = os.path.split(cwd)
+  if thisDir == 'src':
+    (junk,antelopeVersion) = os.path.split(parentDir)
+    return antelopeVersion
+  return ''
+
+def get_requested_version():
+  requestedVersion=os.environ.get('REQUESTED_ANTELOPE')
+  envVersion=get_version_from_env()
+
+  if requestedVersion != None:
+    if requestedVersion != envVersion:
+      print >> sys.stderr, \
+          'WARNING: requested version of Antelope %s' \
+          "and environment %s don't match" % (requestedVersion,
+                                              envVersion)
+  else:
+    requestedVersion = envVersion
+
+  if requestedVersion == None:
+    requestedVersion=get_version_from_cwd()
+
+  if requestedVersion == None or requestedVersion == '':
+    raise UnknownAntelopeVersionException()
+
+  return requestedVersion
+
+def run_installer(version):
+  installerCmd = os.path.join(INSTALLER_BASEDIR, version,
+                              INSTALLER_CMD_NAME)
+  output=subprocess.check_output(
+    flatten([installerCmd, INSTALLER_ARGS]),
+    stderr=subprocess.STDOUT)
+
+  errorStrings=("Cannot proceed with verification",
+                'Please fix the above problems, then try again.')
+
+  for err in errorStrings:
+    if output.find(err) >= 0:
+      raise AntelopeInstallerException(output)
+
+def copy_license_pf(version):
+  src=os.path.join(INITIAL_PF_DIR,'pf','site.pf')
+  dest=os.path.join(get_antelope_base_dir(version),
+                    'data','pf','site.pf')
+  shutil.copyfile(src,dest)
+
+def copy_site_pf(version):
+  src=os.path.join(INITIAL_PF_DIR,'pf','license.pf-'+ version)
+  dest=os.path.join(get_antelope_base_dir(version),
+                    'data','pf','license.pf')
+  shutil.copyfile(src,dest)
+
+def copy_baseline_parameter_files(version=get_requested_version()):
+  copy_license_pf(version)
+  copy_site_pf(version)
+
+def test_all():
+  print "ANTELOPE is %s" % get_version_from_env()
+  print "JUNKO is %s" % get_version_from_env("JUNKO")
+  print "CWD version is %s" % get_version_from_cwd()
+
+  ver=get_requested_version()
+  print "Requested Antelope Version is %s" % ver
+
+### MAIN ###
+version=get_requested_version()
+try:
+  run_installer(version)
+  copy_baseline_parameter_files()
+except AntelopeInstallerException as e:
+  print >> sys.stderr, "ERROR: The Antelope installer failed to " \
+      "complete successfully. Output is below.\n", \
+      '---------------------------------', \
+      e, \
+      '\n---------------------------------'
+  exit(1)
+except Exception as e:
+  print >>sys.stderr, "ERROR: Something went wrong:\n", e
+  exit(1)
+
+exit(0)

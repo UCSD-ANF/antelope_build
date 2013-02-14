@@ -12,6 +12,10 @@ antelope_install:
 
 antelope_update:
 	antelope_update -tv
+
+antelope_purge_old:
+	rm -rf /opt/antelope/old/*
+
 ###
 # Antelope Local
 ###

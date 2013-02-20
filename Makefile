@@ -14,7 +14,7 @@ antelope_install:
 	./libexec/antelope_install_wrapper
 
 antelope_update:
-	antelope_update -tv
+	antelope_update -tvQ
 
 antelope_purge_old:
 	rm -rf /opt/antelope/old/*

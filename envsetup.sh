@@ -36,7 +36,7 @@ case `uname -s` in
     ;;
   SunOS)
 
-    PATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/opt/SUNWspro/bin:/opt/csw/bin:/usr/local/bin
+    PATH=/usr/local/bin:/opt/csw/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/opt/SUNWspro/bin
     ## NOTE -- /opt/matlab/bin must be in your path otherwise the Antelope MATLAB wxtenstions won't get built.
     export PATH
 

@@ -125,7 +125,7 @@ def copy_license_pf(version):
 
 def copy_site_pf(version):
   print >>sys.stderr, "Installing initial license file"
-  src=os.path.join(INITIAL_PF_DIR,'license.pf-'+ version)
+  src=os.path.join(INITIAL_PF_DIR,version + '_license.pf')
   dest=os.path.join(get_antelope_base_dir(version),
                     'data','pf','license.pf')
   shutil.copyfile(src,dest)

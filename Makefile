@@ -1,6 +1,13 @@
-# The default target is ...
 BUILDROOT=build
-all: antelope_update antelopelocal anf contrib vorb
+# The default target is ...
+all:
+	@echo "WARNING: This target does nothing. Try one of\n\
+	* antelope_update\n\
+	* antelope_install\n\
+	* antelope_purge_old\n\
+	* submodules"
+
+submodules: antelopelocal anf contrib vorb
 
 CLEAN_TARGETS  = antelope_purge_old
 CLEAN_TARGETS += antelopelocal_clean

@@ -6,6 +6,7 @@ import sys
 import subprocess
 import collections
 import shutil
+import re
 
 ###
 # Config
@@ -14,7 +15,7 @@ import shutil
 # Location of the Antelope installers. There should be a directory for
 # each version
 INSTALLER_BASEDIR=os.path.join(os.sep,'opt','antelope','cd')
-INSTALLER_ARGS= [ '-S', '-tuv' ]
+INSTALLER_ARGS= [ '-tuv' ]
 INSTALLER_CMD_NAME='Install_antelope'
 
 # Location of the initial license.pf and site.pf
@@ -89,6 +90,21 @@ def get_requested_version():
 
   return requestedVersion
 
+def parseAntelopeVersion(version):
+    """ Return a tuple of major, minor, suffix related to the antelope version
+    """
+    m = re.match(r"^(\d+)\.(\d+)(.*)$",version)
+    return m.group(1,2,3)
+
+def get_installer_args(version):
+    (major,minor,suffix)=parseAntelopeVersion(version)
+    if major <= 5 and minor < 3:
+        args = ['-S']
+    else:
+        args = []
+    args.extend(INSTALLER_ARGS)
+    return args
+
 def run_installer(version):
   print >>sys.stderr, "Installing Antelope %s" % version
   installerCmd = os.path.join(INSTALLER_BASEDIR, version,
@@ -96,7 +112,8 @@ def run_installer(version):
   #output=subprocess.check_output(
   #  flatten([installerCmd, INSTALLER_ARGS]),
   #  stderr=subprocess.STDOUT)
-  p = subprocess.Popen(flatten([installerCmd, INSTALLER_ARGS]),
+  args=get_installer_args(version)
+  p = subprocess.Popen(flatten([installerCmd, args]),
        stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
   (output,junk)=p.communicate()
 

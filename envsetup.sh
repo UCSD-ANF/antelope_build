@@ -7,8 +7,10 @@
 #
 # Determine the version of Antelope used to build software
 #
-# Assume a default of 5.0-64 if we aren't in /opt/antelope/VERSION/src
-DEFAULT_ANTVER=5.2-64
+# Assume a default if we aren't in /opt/antelope/VERSION/src
+DEFAULT_ANTVER=${REQUESTED_ANTELOPE=5.3}
+export REQUESTED_ANTELOPE
+
 currentdir=`pwd`
 if [ `basename $currentdir` == 'src' ]; then
   parentdir=`dirname $currentdir`

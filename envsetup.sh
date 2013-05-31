@@ -9,7 +9,6 @@
 #
 # Assume a default if we aren't in /opt/antelope/VERSION/src
 DEFAULT_ANTVER=${REQUESTED_ANTELOPE=5.3}
-export REQUESTED_ANTELOPE
 
 currentdir=`pwd`
 if [ `basename $currentdir` == 'src' ]; then

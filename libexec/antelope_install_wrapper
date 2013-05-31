@@ -107,6 +107,15 @@ def get_installer_args(version):
     args.extend(INSTALLER_ARGS)
     return args
 
+def check_successful_output(output,version):
+    (major,minor,suffix)=parseAntelopeVersion(version)
+    if int(major) >= 5 and int(minor) >= 3:
+        if output.find('Done') < 0:
+            raise AntelopeInstallerRuntimeExecption(output)
+    else:
+        if output.find("Thanks for using Antelope!") < 0:
+            raise AntelopeInstallerRuntimeException(output)
+
 def run_installer(version):
   print >>sys.stderr, "Installing Antelope %s" % version
   installerCmd = os.path.join(INSTALLER_BASEDIR, version,
@@ -132,8 +141,7 @@ def run_installer(version):
       raise AntelopeInstallerRuntimeException(output)
 
   # If the installer bails out early, it won't print 'Done.'
-  if output.find('Done.') < 0:
-    raise AntelopeInstallerRuntimeException(output)
+  check_successful_output(output,version)
 
 def copy_license_pf(version):
   print >>sys.stderr, "Installing initial site.pf"

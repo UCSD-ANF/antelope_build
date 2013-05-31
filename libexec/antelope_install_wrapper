@@ -99,9 +99,9 @@ def parseAntelopeVersion(version):
 def get_installer_args(version):
     (major,minor,suffix)=parseAntelopeVersion(version)
     if major <= 5 and minor < 3:
-        args = ['-S']
-    else:
         args = []
+    else:
+        args = ['-S']
     args.extend(INSTALLER_ARGS)
     return args
 

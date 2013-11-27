@@ -7,10 +7,9 @@ all:
 	* antelope_purge_old\n\
 	* submodules"
 
-submodules: antelopelocal anf contrib vorb
+submodules: anf contrib vorb
 
 CLEAN_TARGETS  = antelope_purge_old
-CLEAN_TARGETS += antelopelocal_clean
 CLEAN_TARGETS += anf_clean contrib_clean vorb_clean
 
 clean: $(CLEAN_TARGETS)
@@ -25,24 +24,6 @@ antelope_update:
 
 antelope_purge_old:
 	rm -rf /opt/antelope/old/*
-
-###
-# Antelope Local
-###
-ANTELOPELOCAL_SRCDIR=antelopelocal
-antelopelocal:
-	@echo "+-+-+ Building AntelopeLocal +-+-+"
-	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) install
-
-antelopelocal_update: .PHONY
-	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && \
-	  git checkout master && \
-	  git pull
-	-git commit $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) \
-	  -m "Sync AntelopeLocal to HEAD via Makefile"
-
-antelopelocal_clean: .PHONY
-	cd $(BUILDROOT)/$(ANTELOPELOCAL_SRCDIR) && $(MAKE) clean
 
 ###
 # Contrib
@@ -123,8 +104,7 @@ update:
 # Submodule Updates
 ###
 
-SUBMODULE_UPDATE_TARGETS  = antelopelocal_update
-SUBMODULE_UPDATE_TARGETS += contrib_update
+SUBMODULE_UPDATE_TARGETS = contrib_update
 SUBMODULE_UPDATE_TARGETS += vorb_update
 SUBMODULE_UPDATE_TARGETS += anf_update
 submodule_update: $(SUBMODULE_UPDATE_TARGETS)

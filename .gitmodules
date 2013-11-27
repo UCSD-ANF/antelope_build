@@ -1,6 +1,3 @@
-[submodule "build/antelopelocal"]
-	path = build/antelopelocal
-	url = git://github.com/UCSD-ANF/antelopelocal.git
 [submodule "build/anfsrc"]
 	path = build/anfsrc
 	url = git://github.com/UCSD-ANF/anfsrc.git

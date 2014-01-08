@@ -11,9 +11,9 @@
 DEFAULT_ANTVER=${REQUESTED_ANTELOPE=5.3}
 
 currentdir=`pwd`
-if [ `basename $currentdir` == 'src' ]; then
-  parentdir=`dirname $currentdir`
-  antver=`basename $parentdir`
+if [ `basename "$currentdir"` == 'src' ]; then
+  parentdir=`dirname "$currentdir"`
+  antver=`basename "$parentdir"`
   echo "Antelope version is $antver" 1>&2
 else
   echo "Unable to determine which version of Antelope you want based on the"

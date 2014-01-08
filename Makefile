@@ -7,10 +7,10 @@ all:
 	* antelope_purge_old\n\
 	* submodules"
 
-submodules: anf contrib vorb
+submodules: anf contrib
 
 CLEAN_TARGETS  = antelope_purge_old
-CLEAN_TARGETS += anf_clean contrib_clean vorb_clean
+CLEAN_TARGETS += anf_clean contrib_clean
 
 clean: $(CLEAN_TARGETS)
 ###
@@ -48,28 +48,6 @@ contrib_clean: .PHONY
 	cd $(BUILDROOT)/$(CONTRIB_SRCDIR) && $(MAKE) clean
 
 ###
-# Vorb
-###
-VORB_SRCDIR=vorb
-vorb:
-	@echo "+-+-+ Building Vorb +-+-+"
-	cd $(BUILDROOT)/$(VORB_SRCDIR) && \
-	  echo "+++ Running make Include in $(VORB_SRCDIR)" && \
-	  $(MAKE) Include && \
-	  echo "+++ Running make install in $(VORB_SRCDIR)" && \
-	  $(MAKE) install
-
-vorb_update: .PHONY
-	cd $(BUILDROOT)/$(VORB_SRCDIR) && \
-	  git checkout master && \
-	  git pull
-	-git commit $(BUILDROOT)/$(VORB_SRCDIR) \
-	  -m "Sync Vorb to HEAD via Makefile"
-
-vorb_clean: .PHONY
-	cd $(BUILDROOT)/$(VORB_SRCDIR) && $(MAKE) clean
-
-###
 # ANF
 ###
 ANF_SRCDIR=anfsrc
@@ -105,7 +83,6 @@ update:
 ###
 
 SUBMODULE_UPDATE_TARGETS = contrib_update
-SUBMODULE_UPDATE_TARGETS += vorb_update
 SUBMODULE_UPDATE_TARGETS += anf_update
 submodule_update: $(SUBMODULE_UPDATE_TARGETS)
 

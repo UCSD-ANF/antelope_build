@@ -124,6 +124,7 @@ def run_installer(version):
   #  flatten([installerCmd, INSTALLER_ARGS]),
   #  stderr=subprocess.STDOUT)
   args=get_installer_args(version)
+  print >>sys.stderr, "Using installer: %s with args: %s" % (installerCmd, args)
   p = subprocess.Popen(flatten([installerCmd, args]),
        stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
   (output,junk)=p.communicate()

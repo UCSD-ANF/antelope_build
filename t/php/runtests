@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Testing Antelope Extensions..."
+EXTENSION_DIR=${ANTELOPE}/local/data/php
+php --no-php-ini \
+  --define extension=${EXTENSION_DIR}/Orb.so \
+  --define extension=${EXTENSION_DIR}/Datascope.so \
+  --define extension=${EXTENSION_DIR}/sysinfo.so \
+  ./antelope-modules.php
+
+res=$?
+
+echo PHP exited with result $res
+exit $res
+
+# Note: we don't test the pdflib stuff here because it's not part of our
+# Antelope build anymore

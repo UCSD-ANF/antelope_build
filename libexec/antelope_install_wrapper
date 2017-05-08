@@ -15,7 +15,7 @@ import re
 # Location of the Antelope installers. There should be a directory for
 # each version
 INSTALLER_BASEDIR=os.path.join(os.sep,'opt','antelope','cd')
-INSTALLER_ARGS= [ '-tuv' ]
+INSTALLER_ARGS= [ '-S -tuv' ]
 INSTALLER_CMD_NAME='Install_antelope'
 
 # Location of the initial license.pf and site.pf

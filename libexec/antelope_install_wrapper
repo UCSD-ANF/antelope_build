@@ -111,7 +111,7 @@ def check_successful_output(output,version):
     (major,minor,suffix)=parseAntelopeVersion(version)
     if int(major) >= 5 and int(minor) >= 3:
         if output.find('Done') < 0:
-            raise AntelopeInstallerRuntimeExecption(output)
+            raise AntelopeInstallerRuntimeException(output)
     else:
         if output.find("Thanks for using Antelope!") < 0:
             raise AntelopeInstallerRuntimeException(output)

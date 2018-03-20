@@ -15,7 +15,6 @@ import re
 # Location of the Antelope installers. There should be a directory for
 # each version
 INSTALLER_BASEDIR=os.path.join(os.sep,'anf','software','antelope','cd')
-INSTALLER_ARGS= [ '-tuv' ] # Note addition of -S during get_installer_args
 INSTALLER_CMD_NAME='Install_antelope'
 
 # Location of the initial license.pf and site.pf
@@ -97,14 +96,24 @@ def parseAntelopeVersion(version):
     return m.group(1,2,3)
 
 def get_installer_args(version):
+    basic_args= [ '-tuv' ]
+
     (major,minor,suffix)=parseAntelopeVersion(version)
-    if int(major) == 5 and int(minor) < 3:
-        args = []
-    elif int(major) < 5:
-        args = []
-    else:
-        args = ['-S']
-    args.extend(INSTALLER_ARGS)
+
+    # The -S option to skip cd image verification was introduced in 5.3pre
+    # It MUST come before the -tuv options when used for 5.3-5.7
+    args = []
+    if (int(major) >= 5 and int(minor) >=3):
+        args.append('-S')
+
+    # The -m option to skip sudo commands was introduced in 5.8pre and is
+    # required for our build hosts
+    if (int(major) >= 5 and int(minor) >=8):
+        args.append('-m')
+
+    # Finally, add all of the basic arguments
+    args.extend(basic_args)
+
     return args
 
 def check_successful_output(output,version):
@@ -171,23 +180,28 @@ def test_all():
   print "Requested Antelope Version is %s" % ver
 
 ### MAIN ###
-try:
-  version=get_requested_version()
-  run_installer(version)
-  copy_baseline_parameter_files(version)
-except (AntelopeInstallerRuntimeException),e:
-  print >> sys.stderr, "ERROR: The Antelope installer failed to " \
-      "complete successfully. Output is below.\n", \
-      '---------------------------------', \
-      e, \
-      '\n---------------------------------'
-  sys.exit(2)
-except (UnknownAntelopeVersionException),e:
-  print >> sys.stderr, \
-      "ERROR: Couldn't determine which version of Antelope to install."
-  sys.exit(3)
-except (Exception),e:
-  print >>sys.stderr, "ERROR: Something went wrong:\n", e
-  sys.exit(1)
+def main():
+    """Main logic for the program"""
 
-sys.exit(0)
+    try:
+        version=get_requested_version()
+        run_installer(version)
+        copy_baseline_parameter_files(version)
+    except (AntelopeInstallerRuntimeException),e:
+        print >> sys.stderr, "ERROR: The Antelope installer failed to " \
+                "complete successfully. Output is below.\n", \
+                '---------------------------------', \
+                e, \
+                '\n---------------------------------'
+        sys.exit(2)
+    except (UnknownAntelopeVersionException),e:
+        print >> sys.stderr, \
+                "ERROR: Couldn't determine which version of Antelope to install."
+        sys.exit(3)
+    except (Exception),e:
+        print >>sys.stderr, "ERROR: Something went wrong:\n", e
+        sys.exit(1)
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main ()

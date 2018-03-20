@@ -16,7 +16,7 @@ clean: $(CLEAN_TARGETS)
 # Installation and update
 ###
 antelope_install:
-	./libexec/antelope_install_wrapper
+	./libexec/antelope_install_wrapper.py
 
 antelope_update:
 	antelope_update -tvQ

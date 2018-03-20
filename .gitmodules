@@ -1,6 +1,0 @@
-[submodule "build/anfsrc"]
-	path = build/anfsrc
-	url = git://github.com/UCSD-ANF/anfsrc.git
-[submodule "build/contrib"]
-	path = build/contrib
-	url = git://github.com/antelopeusersgroup/antelope_contrib.git

@@ -96,12 +96,12 @@ def parseAntelopeVersion(version):
     return m.group(1,2,3)
 
 def get_installer_args(version):
-    basic_args= [ '-tuv' ]
+    basic_args= [ '-t', '-u', '-v' ]
 
     (major,minor,suffix)=parseAntelopeVersion(version)
 
     # The -S option to skip cd image verification was introduced in 5.3pre
-    # It MUST come before the -tuv options when used for 5.3-5.7
+    # It MUST come before the -t, -u, and -v options when used for 5.3-5.7
     args = []
     if (int(major) >= 5 and int(minor) >=3):
         args.append('-S')

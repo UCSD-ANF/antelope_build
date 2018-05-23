@@ -3,7 +3,9 @@ BUILDROOT=build
 all:
 	@echo "WARNING: This target does nothing. Try one of\n\
 	* antelope_update\n\
-	* antelope_install\n\"
+	* antelope_install\n\
+	* antelope_mapdata\n\
+	* antelope_toolchain\n\
 	* antelope_purge_old"
 
 submodules:
@@ -17,6 +19,12 @@ clean: $(CLEAN_TARGETS)
 ###
 antelope_install:
 	./libexec/antelope_install_wrapper.py
+
+antelope_mapdata:
+	./libexec/antelope_mapdata_wrapper.pl
+
+antelope_toolchain:
+	./libexec/antelope_toolchain_wrapper.pl
 
 antelope_update:
 	antelope_update -tvQ
